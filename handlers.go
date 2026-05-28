@@ -9,6 +9,7 @@ func handleList(args []string) {
 	s, err := ParseStatus(args[2])
 
 	if err != nil {
+
 		log.Fatalf("%v. use: %s,%s,%s", err, Todo, InProgress, Done)
 	}
 

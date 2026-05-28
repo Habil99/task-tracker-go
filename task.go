@@ -33,7 +33,7 @@ func (td TaskDescription) TaskDescriptionPointer() *TaskDescription {
 }
 
 func addTask(d TaskDescription) {
-	var tasks []task = getTasks()
+	tasks, _ := getTasks()
 
 	id := getIncrementalId(tasks)
 	now := time.Now()
@@ -56,7 +56,7 @@ func addTask(d TaskDescription) {
 	log.Printf("Task added successfully (ID: %d)", t.ID)
 }
 
-func getTasks() []task {
+func getTasks() ([]task, error) {
 	file, err := os.OpenFile("todo.json", os.O_CREATE|os.O_RDWR, 0644)
 	if err != nil {
 		log.Fatal("Error while opening/creating json ", err)
@@ -68,17 +68,17 @@ func getTasks() []task {
 	decoder := json.NewDecoder(file)
 	if err := decoder.Decode(&todos); err != nil {
 		if err == io.EOF {
-			return []task{}
+			return []task{}, nil
 		}
 
-		log.Fatal("Error while decoding file: ", err)
+		return []task{}, fmt.Errorf("Error while decoding file: ", err)
 	}
 
-	return todos
+	return todos, nil
 }
 
 func getTasksByStatus(s Status) []task {
-	tasks := getTasks()
+	tasks, _ := getTasks()
 	filtered := make([]task, 0)
 
 	for _, t := range tasks {
@@ -91,11 +91,11 @@ func getTasksByStatus(s Status) []task {
 }
 
 func getTaskById(id TaskID) (task, int, error) {
-	tasks := getTasks()
+	tasks, _ := getTasks()
 
-	for i, task := range tasks {
-		if task.ID == id {
-			return task, i, nil
+	for i, t := range tasks {
+		if t.ID == id {
+			return t, i, nil
 		}
 	}
 
@@ -103,7 +103,7 @@ func getTaskById(id TaskID) (task, int, error) {
 }
 
 func deleteTask(id TaskID) {
-	tasks := getTasks()
+	tasks, _ := getTasks()
 	_, taskIndex, err := getTaskById(id)
 
 	if err != nil {
@@ -128,7 +128,7 @@ func updateTask(id TaskID, dto UpdateDto) {
 		log.Fatal("Error finding task by id ", err)
 	}
 
-	tasks := getTasks()
+	tasks, _ := getTasks()
 
 	if dto.description != nil {
 		tasks[ti].Description = *dto.description
