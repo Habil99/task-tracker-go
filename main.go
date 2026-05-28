@@ -42,20 +42,20 @@ func main() {
 			}
 
 			if args[1] == Delete.String() {
-				deleteTask(TaskId(id))
+				deleteTask(TaskID(id))
 			}
 
 			if args[1] == MarkInProgress.String() {
 				updateTask(
-					TaskId(id),
-					UpdateDto{status: InProgress},
+					TaskID(id),
+					UpdateDto{status: InProgress.Pointer()},
 				)
 			}
 
 			if args[1] == MarkDone.String() {
 				updateTask(
-					TaskId(id),
-					UpdateDto{status: Done},
+					TaskID(id),
+					UpdateDto{status: Done.Pointer()},
 				)
 			}
 
@@ -73,9 +73,9 @@ func main() {
 
 		if args[3] != "" {
 			updateTask(
-				TaskId(id),
+				TaskID(id),
 				UpdateDto{
-					description: TaskDescription(args[3]),
+					description: new(TaskDescription(args[3])),
 				})
 		} else {
 			log.Fatal("Please provide description")

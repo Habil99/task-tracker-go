@@ -11,11 +11,11 @@ import (
 )
 
 type (
-	TaskId          int
+	TaskID          int
 	TaskDescription string
 
 	task struct {
-		Id          TaskId          `json:"id"`
+		ID          TaskID          `json:"id"`
 		Description TaskDescription `json:"description"`
 		Status      Status          `json:"status"`
 		CreatedAt   time.Time       `json:"createdAt"`
@@ -35,7 +35,7 @@ func addTask(d TaskDescription) {
 	now := time.Now()
 
 	t := task{
-		Id:          id,
+		ID:          id,
 		Description: d,
 		Status:      Todo,
 		CreatedAt:   now,
@@ -49,7 +49,7 @@ func addTask(d TaskDescription) {
 		log.Fatal("Error: ", err)
 	}
 
-	log.Printf("Task added successfully (ID: %d)", t.Id)
+	log.Printf("Task added successfully (ID: %d)", t.ID)
 }
 
 func getTasks() []task {
@@ -86,11 +86,11 @@ func getTasksByStatus(s Status) []task {
 	return filtered
 }
 
-func getTaskById(id TaskId) (task, int, error) {
+func getTaskById(id TaskID) (task, int, error) {
 	tasks := getTasks()
 
 	for i, task := range tasks {
-		if task.Id == id {
+		if task.ID == id {
 			return task, i, nil
 		}
 	}
@@ -98,7 +98,7 @@ func getTaskById(id TaskId) (task, int, error) {
 	return task{}, 0, fmt.Errorf("task not found by ID: %d", id)
 }
 
-func deleteTask(id TaskId) {
+func deleteTask(id TaskID) {
 	tasks := getTasks()
 	_, taskIndex, err := getTaskById(id)
 
@@ -117,7 +117,7 @@ func deleteTask(id TaskId) {
 	log.Printf("Task deleted successfully (ID: %d)", id)
 }
 
-func updateTask(id TaskId, dto UpdateDto) {
+func updateTask(id TaskID, dto UpdateDto) {
 	_, ti, err := getTaskById(id)
 
 	if err != nil {
@@ -160,12 +160,12 @@ func updateJSONFile(tasks []task) error {
 	return ee
 }
 
-func getIncrementalId(tasks []task) TaskId {
-	var bi TaskId
+func getIncrementalId(tasks []task) TaskID {
+	var bi TaskID
 
 	for _, t := range tasks {
-		if bi < t.Id {
-			bi = t.Id
+		if bi < t.ID {
+			bi = t.ID
 		}
 	}
 
