@@ -17,6 +17,10 @@ func (s Status) String() string {
 	return [...]string{"todo", "in-progress", "done"}[s]
 }
 
+func (s Status) Pointer() *Status {
+	return &s
+}
+
 func ParseStatus(v string) (Status, error) {
 	switch v {
 	case Todo.String():
