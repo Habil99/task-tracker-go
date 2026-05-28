@@ -23,8 +23,8 @@ type (
 	}
 
 	UpdateDto struct {
-		description TaskDescription
-		status      Status
+		description *TaskDescription
+		status      *Status
 	}
 )
 
@@ -135,12 +135,12 @@ func updateTask(id TaskId, dto UpdateDto) {
 
 	tasks := getTasks()
 
-	if dto.description != "" {
-		tasks[ti].Description = dto.description
+	if dto.description != nil {
+		tasks[ti].Description = *dto.description
 	}
 
-	if dto.status != 0 {
-		tasks[ti].Status = dto.status
+	if dto.status != nil {
+		tasks[ti].Status = *dto.status
 	}
 
 	tasks[ti].UpdatedAt = time.Now()
