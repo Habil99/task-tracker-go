@@ -30,14 +30,16 @@ type (
 
 func addTask(d TaskDescription) {
 	var tasks []task = getTasks()
+
 	id := getIncrementalId(tasks)
+	now := time.Now()
 
 	t := task{
 		Id:          id,
 		Description: d,
 		Status:      Todo,
-		CreatedAt:   time.Time{},
-		UpdatedAt:   time.Time{},
+		CreatedAt:   now,
+		UpdatedAt:   now,
 	}
 
 	newTasks := append(tasks, t)
@@ -140,6 +142,8 @@ func updateTask(id TaskId, dto UpdateDto) {
 	if dto.status != 0 {
 		tasks[ti].Status = dto.status
 	}
+
+	tasks[ti].UpdatedAt = time.Now()
 
 	ue := updateJSONFile(tasks)
 
