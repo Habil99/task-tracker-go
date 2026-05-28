@@ -14,7 +14,16 @@ const (
 )
 
 func (s Status) String() string {
-	return [...]string{"todo", "in-progress", "done"}[s]
+	switch s {
+	case Todo:
+		return "todo"
+	case InProgress:
+		return "in-progress"
+	case Done:
+		return "done"
+	default:
+		return "unknown"
+	}
 }
 
 func (s Status) Pointer() *Status {
