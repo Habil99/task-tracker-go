@@ -12,6 +12,7 @@ func main() {
 	if len(args) == 2 && args[1] == List.String() {
 		tasks := getTasks()
 		log.Printf("%+v", tasks)
+		return
 	}
 
 	if len(args) == 3 {
@@ -75,13 +76,11 @@ func main() {
 			updateTask(
 				TaskID(id),
 				UpdateDto{
-					description: new(TaskDescription(args[3])),
+					description: TaskDescription(args[3]).TaskDescriptionPointer(),
 				})
 		} else {
 			log.Fatal("Please provide description")
 		}
 
 	}
-
-	log.Printf("%+v", getTasks())
 }

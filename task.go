@@ -28,6 +28,10 @@ type (
 	}
 )
 
+func (td TaskDescription) TaskDescriptionPointer() *TaskDescription {
+	return &td
+}
+
 func addTask(d TaskDescription) {
 	var tasks []task = getTasks()
 
