@@ -1,0 +1,19 @@
+# Binaries
+main
+*.exe
+*.exe~
+*.out
+
+# Test artifacts
+*.test
+*.prof
+coverage.out
+
+# Local runtime data
+todo.json
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+
