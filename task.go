@@ -107,7 +107,7 @@ func deleteTask(id TaskID) {
 	_, taskIndex, err := getTaskById(id)
 
 	if err != nil {
-		return
+		log.Fatal(err)
 	}
 
 	updatedTasks := slices.Delete(tasks, taskIndex, taskIndex+1)
@@ -165,13 +165,13 @@ func updateJSONFile(tasks []task) error {
 }
 
 func getIncrementalId(tasks []task) TaskID {
-	var bi TaskID
+	var maxID TaskID
 
 	for _, t := range tasks {
-		if bi < t.ID {
-			bi = t.ID
+		if maxID < t.ID {
+			maxID = t.ID
 		}
 	}
 
-	return bi + 1
+	return maxID + 1
 }
