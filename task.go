@@ -15,11 +15,11 @@ type (
 	TaskDescription string
 
 	task struct {
-		Id          TaskId
-		Description TaskDescription
-		Status      Status
-		CreatedAt   time.Time
-		UpdatedAt   time.Time
+		Id          TaskId          `json:"id"`
+		Description TaskDescription `json:"description"`
+		Status      Status          `json:"status"`
+		CreatedAt   time.Time       `json:"createdAt"`
+		UpdatedAt   time.Time       `json:"updatedAt"`
 	}
 
 	UpdateDto struct {
