@@ -44,18 +44,9 @@ func addTask(d TaskDescription) {
 
 	newTasks := append(tasks, t)
 
-	file, err := os.Create("todo.json")
+	err := updateJSONFile(newTasks)
 	if err != nil {
-		log.Fatal("Error while creating file", err)
-	}
-
-	defer file.Close()
-
-	encoder := json.NewEncoder(file)
-	encoderError := encoder.Encode(newTasks)
-
-	if encoderError != nil {
-		log.Fatal("Error while encoding tasks", encoderError)
+		log.Fatal("Error: ", err)
 	}
 
 	log.Printf("Task added successfully (ID: %d)", t.Id)
