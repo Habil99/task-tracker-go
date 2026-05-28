@@ -155,11 +155,13 @@ func updateTask(id TaskId, dto UpdateDto) {
 }
 
 func updateJSONFile(tasks []task) error {
-	file, oe := os.OpenFile("todo.json", os.O_TRUNC|os.O_WRONLY, 0644)
+	file, oe := os.OpenFile("todo.json", os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0644)
 
 	if oe != nil {
 		return oe
 	}
+
+	defer file.Close()
 
 	encoder := json.NewEncoder(file)
 	ee := encoder.Encode(tasks)
